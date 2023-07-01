@@ -10,7 +10,7 @@ const connection = mysql2.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'join_us',
-    password: '12777561005663sS$'
+
 });
 
 //Generating 500 fake emails
