@@ -7,8 +7,8 @@ const flash = require('express-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 dotenv.config();
-// const faker = require('faker');
 
+app.use(express.static(__dirname + "/public"));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
