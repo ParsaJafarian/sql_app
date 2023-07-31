@@ -7,8 +7,10 @@ This app is a simple sign up page for a newsletter that asks for an email. The e
 ## How to run
 1. Clone the repository
 2. Run `npm install` to install all the dependencies
-3. Run `npm start` to start the server
-4. Go to `localhost:3000` to view the app
+3. Run `SOURCE <path to createDB.sql>` to create the database
+4. Run `SOURCE <path to users.sql>` to create the table
+5. Run `npm start` to start the server
+6. Go to `localhost:3000` to view the app
 
 ## Technologies used
 - Node.js
@@ -22,16 +24,9 @@ This app is a simple sign up page for a newsletter that asks for an email. The e
 - How to use MySql
 - How to use Express.js
 - How to use Node.js
-- How to use Postman
 - How to use Nodemon
 - How to use EJS
 - How to use Body-Parser
-
-## What I want to learn
-- How to use React.js
-- How to use Passport.js
-- How to use OAuth
-- How to use Redux
 
 ## What I want to add
 - A login page
