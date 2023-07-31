@@ -6,11 +6,12 @@ This app is a simple sign up page for a newsletter that asks for an email. The e
 
 ## How to run
 1. Clone the repository
-2. Run `npm install` to install all the dependencies
+2. Go to the MySql shell
 3. Run `SOURCE <path to createDB.sql>` to create the database
 4. Run `SOURCE <path to users.sql>` to create the table
-5. Run `npm start` to start the server
-6. Go to `localhost:3000` to view the app
+5. Run `npm install` to install all the dependencies
+6. Run `npm start` to start the server
+7. Go to `localhost:3000` to view the app
 
 ## Technologies used
 - Node.js
