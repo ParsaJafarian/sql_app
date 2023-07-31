@@ -1,46 +1,47 @@
-const mysql2 = require('mysql2');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const db = require('./config/db');
+const dotenv = require('dotenv');
+const flash = require('express-flash');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+dotenv.config();
+// const faker = require('faker');
 
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(flash());
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-const connection = mysql2.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'join_us',
-
-});
-
-//Generating 500 fake emails
-// const emails = [];
-// for (let i = 0; i < 500; i++) {
-//     emails.push([
-//             faker.internet.email(),
-//             faker.date.past()
-//         ]
-//     );
-// }
-
-app.get("/", function (request, response) {
-    const q = 'SELECT COUNT(*) AS count FROM users';
-    connection.query(q, function (err, results) {
-        if (err) throw err;
+app.get("/", async (request, response) => {
+    try {
+        const q = 'SELECT COUNT(*) AS count FROM users';
+        const results = await db.query(q);
         const count = results[0].count;
-        response.render("home", {count: count},);
-    });
+        response.render("home", { count: count, messages: request.flash('error')});
+    } catch (e) {
+        request.flash('error', e.message);
+        response.redirect('/');
+    }
 });
 
-app.post("/register", function (request, response) {
-
-    const q = "INSERT INTO users (email) VALUES ('" + request.body.email + "')";
-    connection.query(q, function (err, results) {
-        if (err) throw err;
-        response.sendFile("C:\\Users\\Admin\\WebstormProjects\\sql_app\\views\\register.html");
-    });
+app.post("/register", async (request, response) => {
+    try {
+        const q = "INSERT INTO users (email) VALUES ('" + request.body.email + "')";
+        await db.query(q);
+        response.render("register");
+    } catch (e) {
+        request.flash('error', e.message);
+        response.redirect('/');
+    }
 });
 
-app.listen(8080, function () {
+app.listen(process.env.PORT, () => {
     console.log("Server is running")
 });
